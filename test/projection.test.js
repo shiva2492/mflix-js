@@ -4,6 +4,8 @@ describe("Projection", () => {
   beforeAll(async () => {
     await MoviesDAO.injectDB(global.mflixClient)
   })
+  
+  jest.setTimeout(5000);
 
   test("Can perform a country search for one country", async () => {
     const kosovoList = ["Kosovo"]
@@ -17,6 +19,7 @@ describe("Projection", () => {
     expect(movies.length).toEqual(1468)
     movies.map(movie => {
       const movieKeys = Object.keys(movie).sort()
+      console.log()
       const expectedKeys = ["_id", "title"]
       expect(movieKeys).toEqual(expectedKeys)
     })
