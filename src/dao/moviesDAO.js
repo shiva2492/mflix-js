@@ -179,21 +179,18 @@ export default class MoviesDAO {
     /**
     Ticket: Faceted Search
 
-    Please append the skipStage, limitStage, and facetStage to the queryPipeline
-    (in that order). You can accomplish this by adding the stages directly to
-    the queryPipeline.
+    Appending the skipStage, limitStage, and facetStage to the queryPipeline
+    (in that order).
 
-    The queryPipeline is a Javascript array, so you can use push() or concat()
-    to complete this task, but you might have to do something about `const`.
     */
 
-    const queryPipeline = [
+    let queryPipeline = [
       matchStage,
-      sortStage,
-      // TODO Ticket: Faceted Search
-      // Add the stages to queryPipeline in the correct order.
+      sortStage
     ]
-
+    queryPipeline.push(skipStage)
+    queryPipeline.push(limitStage)
+    queryPipeline.push(facetStage)
     try {
       const results = await (await movies.aggregate(queryPipeline)).next()
       const count = await (await movies.aggregate(countingPipeline)).next()
