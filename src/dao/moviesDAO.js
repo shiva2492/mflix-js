@@ -247,15 +247,14 @@ export default class MoviesDAO {
     /**
     Ticket: Paging
 
-    Before this method returns back to the API, use the "moviesPerPage" and
+    Before this method returns back to the API, using the "moviesPerPage" and
     "page" arguments to decide the movies to display.
 
-    Paging can be implemented by using the skip() and limit() cursor methods.
+    Paging is implemented by using the skip() and limit() cursor methods.
     */
 
-    // TODO Ticket: Paging
-    // Use the cursor to only return the movies that belong on the current page
-    const displayCursor = cursor.limit(moviesPerPage)
+    let skipPerScroll = page*moviesPerPage
+    const displayCursor = cursor.skip(skipPerScroll).limit(moviesPerPage)
 
     try {
       const moviesList = await displayCursor.toArray()
