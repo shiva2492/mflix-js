@@ -4,6 +4,7 @@ const testUser = {
   name: "foo",
   email: "foobaz@bar.com",
   password: "foobar",
+  preferences: {}
 }
 
 describe("User Preferences", () => {
