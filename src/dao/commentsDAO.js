@@ -43,8 +43,8 @@ export default class CommentsDAO {
     try {
       // Constructing the comment document to be inserted into MongoDB.
       const commentDoc = { 
-            name: user['name'], 
-            email: user['email'], 
+            name: user["name"], 
+            email: user["email"], 
             movie_id: ObjectId(movieId),
             text: comment,
             date: date
@@ -72,7 +72,7 @@ export default class CommentsDAO {
       // Using the commentId and userEmail to select the proper comment, then
       // updates the "text" and "date" fields of the selected comment.
       const updateResponse = await comments.updateOne(
-        { '_id': ObjectId(commentId), email: userEmail  },
+        { "_id": ObjectId(commentId), email: userEmail  },
         { $set: { text: text, date: date } },
         { $upsert: true }
       )
@@ -88,8 +88,7 @@ export default class CommentsDAO {
     /**
     Ticket: Delete Comments
 
-    Ensuring the delete operation is limited so only the user can delete their own
-    comments, but not anyone else's comments.
+    Ensuring the delete operation is limited so only the user can delete their own comments, but not anyone else's comments.
     */
 
     try {
@@ -117,7 +116,7 @@ export default class CommentsDAO {
       const pipeline = [
         {
           $group: {
-            '_id': '$email',
+            "_id": "$email",
             count: { $sum: 1 }
           }
         },
@@ -132,7 +131,7 @@ export default class CommentsDAO {
     ]
 
       // Using a more durable Read Concern here to make sure this data is not stale.
-      const readConcern = { level: 'majority' }
+      const readConcern = { level: "majority" }
 
       const aggregateResult = await comments.aggregate(pipeline, {
         readConcern,

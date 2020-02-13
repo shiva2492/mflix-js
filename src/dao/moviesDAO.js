@@ -287,16 +287,16 @@ export default class MoviesDAO {
           }
         },{
           $lookup: {
-            from: 'comments', 
-            localField: '_id', 
-            foreignField: 'movie_id', 
-            as: 'comments'
+            from: "comments", 
+            localField: "_id", 
+            foreignField: "movie_id", 
+            as: "comments"
           }
         },
         {
           $unwind: {
-            path: '$comments', 
-            includeArrayIndex: 'string', 
+            path: "$comments", 
+            includeArrayIndex: "string", 
             preserveNullAndEmptyArrays: true
           }
         }, 
@@ -307,11 +307,14 @@ export default class MoviesDAO {
         }, 
         {
           $group: {
-            '_id': '$_id', 
+            "_id": "$_id", 
             title: {
-              '$first': '$title'
+              "$first": "$title"
+            },
+            lastupdated: {
+              "$first": "$lastupdated"
             },  
-            comments: {'$push': '$comments'}
+            comments: { "$push": "$comments" }
           }
         }
       ]
